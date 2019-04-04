@@ -30,6 +30,63 @@
 }
 
 
+/* Profile Header CSS */
+
+#profile {
+  margin-top: 15%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
+}
+
+#profile-header {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile-pic {
+  flex-grow: 1;
+  min-width: 250px;
+}
+
+.profile-info {
+  flex-grow: 1;
+  width: 500px;
+  max-height: 200px;
+}
+
+.profile-info h1 {
+  font-size: 6rem;
+}
+
+.active-mark {
+  margin-top: -2%;
+  color: green;
+}
+
+.busy-mark {
+  margin-top: -4%;
+  color: red;
+}
+
+.profile-email {
+  margin-top: -2%;
+  font-size: 1rem;
+}
+
+.profile-info button {
+  width: 200px;
+  text-align: center;
+  margin: auto;
+}
+
+/* #root {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+} */
 
 
 
@@ -41,6 +98,8 @@
     padding-bottom: 26.5px;
     line-height: 27px;
   }
+
+  /* Home page css */
 
   .cover {
     max-width: 100%;
@@ -94,6 +153,8 @@
 }
 
 @media (max-width: 900px) {
+
+    /* Home page css */
 
   .cover {
     max-width: 100%;

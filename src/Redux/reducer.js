@@ -19,6 +19,12 @@ const reducer = (state = initialState, action) => {
       return {...state, current_user: action.payload.user}
     }
 
+    case('UPDATE_USER'): {
+      // localStorage.removeItem("token")
+      // localStorage.setItem("token", action.payload.jwt)
+      return {...state, current_user: action.payload.user}
+    }
+
     case ('LOAD_CURRENT_USER'): {
       return {...state, current_user: action.payload.user}
     }
