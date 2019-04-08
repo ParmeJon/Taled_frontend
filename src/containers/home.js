@@ -13,7 +13,7 @@ render() {
       <div className="quote">"tell the story with your loved ones in mind"</div>
       <div className="title">TaleD</div>
       <div className="begin">
-      <Button variant="outline-info" block size="lg" onClick={()=>{localStorage.token ? this.props.history.push('/profile') : this.props.history.push('/signup')}}>{localStorage.token ? "Continue" : "Begin"}</Button>
+      <Button variant="info" block size="lg" onClick={()=>{localStorage.token ? this.props.history.push('/profile') : this.props.history.push('/signup')}}>{localStorage.token ? "Continue" : "Begin"}</Button>
       </div>
     </div>
   )

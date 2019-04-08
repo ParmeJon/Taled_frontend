@@ -1,5 +1,7 @@
 const initialState = {
-  current_user: {}
+  current_user: {},
+  current_trip: {},
+  all_trips: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -16,7 +18,7 @@ const reducer = (state = initialState, action) => {
     case ('LOG_IN'): {
       localStorage.setItem("token", action.payload.jwt)
       // console.log(action.payload.user.first_name)
-      return {...state, current_user: action.payload.user}
+      return {...state, current_user: action.payload.user, all_trips: action.payload.trips}
     }
 
     case('UPDATE_USER'): {
@@ -27,6 +29,10 @@ const reducer = (state = initialState, action) => {
 
     case ('LOAD_CURRENT_USER'): {
       return {...state, current_user: action.payload.user}
+    }
+
+    case ('CREATE_TRIP'): {
+      return {...state, current_trip: action.payload.trip, current_user: action.payload.user}
     }
 
     default:

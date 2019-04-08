@@ -40,7 +40,7 @@ class Menu extends React.Component {
               <NavDropdown alignRight className="mr-auto" title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item onClick={()=>this.props.history.push('/profile')}>{`${this.props.current_user.first_name}'s' page`}</NavDropdown.Item>
               <NavDropdown.Item >New Post</NavDropdown.Item>
-              <NavDropdown.Item >Something</NavDropdown.Item>
+              <NavDropdown.Item >New Trip</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Friends</NavDropdown.Item>
             </NavDropdown> : null }

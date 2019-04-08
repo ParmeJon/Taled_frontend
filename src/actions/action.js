@@ -1,7 +1,27 @@
+
+
 export const logIn = (logInInfo) => ({type: "LOG_IN", payload: logInInfo})
 export const signUp = (signUpInfo) => ({type: "SIGN_UP", payload: signUpInfo})
 export const currentUser = (currentUserInfo) => ({type: "LOAD_CURRENT_USER", payload: currentUserInfo})
 export const updateUser = (userInfo) => ({type: "UPDATE_USER", payload: userInfo})
+export const createTrip = (tripInfo) => ({type: "CREATE_TRIP", payload: tripInfo})
+
+
+export const postCreateTrip = (tripInfo) => (dispatch) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/trips`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(tripInfo)
+  })
+  .then(r=>r.json())
+  .then(res => dispatch(createTrip(res)))
+  .catch(console.error)
+}
 
 
 export const getCurrentUser = (token) => (dispatch) => {
@@ -18,21 +38,26 @@ export const getCurrentUser = (token) => (dispatch) => {
   .catch(console.error)
 }
 
-export const updateCurrentUser = (id, newUserInfo) => (dispatch) => {
+export const updateThisUser = (id, newUserInfo) => (dispatch) => {
   let token = localStorage.token
+  let formData = new FormData()
+  if (newUserInfo.profile_image) {
+    formData.append("profile_image", newUserInfo.profile_image)
+  }
+  formData.append("email", newUserInfo.email)
+  formData.append("first_name", newUserInfo.first_name)
+  formData.append("last_name", newUserInfo.last_name)
+  formData.append("active", newUserInfo.active)
+
   return fetch(`http://localhost:3000/api/v1/users/${id}`, {
+    method: "PATCH",
     headers: {
-      "content-type": "application/json",
-      accepts: "application/json",
       Authorization: `Bearer ${token}`
     },
-    method: "PATCH",
-    body: JSON.stringify(newUserInfo)
-
+    body: formData
   })
-  .then(r=>r.json())
+  .then(r => r.json())
   .then(res => dispatch(updateUser(res)) )
-  .catch(console.error)
 }
 
 export const createUser = (signUpInfo) => {

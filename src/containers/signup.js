@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {FormControl, FormGroup, ControlLabel, HelpBlock, Checkbox, Radio, Button, Card} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form'
 import {createUser} from '../actions/action'
+import { withRouter } from "react-router-dom";
 
 class Signup extends React.Component {
 
@@ -17,11 +18,13 @@ class Signup extends React.Component {
   handleSubmit = (e)=> {
     e.preventDefault()
     this.props.signup(this.state)
+    this.props.history.push('/profile')
   }
 
   changeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+
     })
   }
 
@@ -73,4 +76,4 @@ const mapDispatchToProps = dispatch => ({
   signup: (userInfo) => dispatch(createUser(userInfo))
 })
 
-export default connect(null, mapDispatchToProps)(Signup)
+export default connect(null, mapDispatchToProps)(withRouter(Signup))
