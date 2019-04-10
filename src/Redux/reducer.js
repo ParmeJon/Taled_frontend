@@ -2,7 +2,7 @@ const initialState = {
   current_user: {},
   selected_trip: {},
   selected_trip_posts: [],
-  all_trips: []
+  post_geolocation: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -54,6 +54,11 @@ const reducer = (state = initialState, action) => {
 
     case ('FINISH_TRIP'): {
       return {...state, current_user: action.payload.user}
+    }
+
+    case ('GET_AREA'): {
+      let place = action.payload['Response']['View'][0]["Result"][0]["Location"]["Address"].Label
+      return {...state, post_geolocation: place }
     }
 
     default:

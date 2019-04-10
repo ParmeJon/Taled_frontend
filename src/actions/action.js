@@ -9,6 +9,15 @@ export const selectTrip = (tripInfo) => ({type: "SELECT_TRIP", payload: tripInfo
 export const deleteStateTrip = (tripInfo) => ({type: "DELETE_TRIP", payload: tripInfo})
 export const createPost = (postInfo) => ({type: "CREATE_POST", payload: postInfo})
 export const finishTrip = (returnInfo) => ({type: "FINISH_TRIP", payload: returnInfo})
+export const areaResponse = (res) => ({type: "GET_AREA", payload: res})
+
+export const getArea = (coordinates) => (dispatch) => {
+  return fetch(`https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?app_id=${process.env.REACT_APP_GEOLOCATION_APP_ID}&app_code=${process.env.REACT_APP_GEOLOCATION_APP_CODE}&mode=retrieveAreas&prox=${coordinates}`)
+  .then(r => r.json())
+  .then( res => dispatch(areaResponse(res)))
+  .catch(console.error)
+  // .then(res => dispatch(areaResponse(res)))
+}
 
 export const updateFinishTrip = (id, completed) => (dispatch) => {
   let token = localStorage.token

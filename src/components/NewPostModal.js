@@ -3,7 +3,8 @@ import {Row, Col, Form } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux'
-import { postCreatePost } from '../actions/action'
+import { postCreatePost, getArea } from '../actions/action'
+
 
 
 class NewPostModal extends React.Component {
@@ -17,11 +18,24 @@ class NewPostModal extends React.Component {
     post_image: null
   }
 
+
+componentDidMount() {
+  console.log("about to fetcharea")
+  navigator.geolocation.getCurrentPosition((position)=> {
+    let coordinates = `${position.coords.latitude},${position.coords.longitude}`
+    this.props.fetchArea(coordinates)
+    console.log("mounting coordinates", coordinates)
+  })
+}
+
   componentDidUpdate(prevProps) {
 
     if (this.state.trip_id !== this.props.selected_trip.id) {
-      this.setState({
-        trip_id: this.props.selected_trip.id
+      navigator.geolocation.getCurrentPosition((position)=> {
+        this.setState({
+          trip_id: this.props.selected_trip.id,
+          geolocation: `${this.props.post_geolocation}`
+        })
       })
     }
   }
@@ -53,6 +67,7 @@ class NewPostModal extends React.Component {
   render() {
 console.log(this.state)
 
+
     return (
       <Modal
         {...this.props}
@@ -73,21 +88,27 @@ console.log(this.state)
           <Form.Control type="text" name="title" onChange={this.onChangeHandler}/>
         </Form.Group>
 
-        <Form.Group controlId="formGridUpload">
-        <Form.Label>Attach a Photo!</Form.Label>
-        <Form.Control type="file" name="post_image" onChange={this.onChangeFile} />
+        <Form.Row>
+
+        <Form.Group as={Col} controlId="formGridState">
+        <Form.Label>Location</Form.Label>
+          <Form.Control name="geolocation" onChange={this.onChangeHandler} as="select">
+          <option></option>
+          <option></option>
+          </Form.Control>
         </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridUpload">
+            <Form.Label>Attach a Photo!</Form.Label>
+            <Form.Control type="file" name="post_image" onChange={this.onChangeFile} />
+          </Form.Group>
+
+        </Form.Row>
 
         <Form.Group controlId="formGridContent">
           <Form.Label>Content</Form.Label>
           <Form.Control as="textarea" name="content" onChange={this.onChangeHandler}/>
         </Form.Group>
-
-        <Form.Group controlId="formGridContent">
-          <Form.Label>Location</Form.Label>
-          <Form.Control as="textarea" name="geolocation" onChange={this.onChangeHandler}/>
-        </Form.Group>
-
 
 {/*        <Form.Group controlId="formGridAddress2">
           <Form.Label>Password</Form.Label>
@@ -107,10 +128,11 @@ console.log(this.state)
   }
 }
 
-const mapStateToProps = (state) => ({ selected_trip: state.selected_trip})
+const mapStateToProps = (state) => ({ selected_trip: state.selected_trip, post_geolocation: state.post_geolocation})
 
 const mapDispatchToProps = (dispatch) => ({
-  createPost: (postInfo) => dispatch(postCreatePost(postInfo))
+  createPost: (postInfo) => dispatch(postCreatePost(postInfo)),
+  fetchArea: (coordinates) => dispatch(getArea(coordinates))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostModal);

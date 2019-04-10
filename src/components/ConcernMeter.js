@@ -25,7 +25,6 @@ componentWillUnmount() {
 
 setSafeStatus() {
   // if (this.props && this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
-  console.log("starting setsafestatus", this.state.safeStatus)
   let timeNow = Date.now()
   let latestUpdate
 
@@ -48,7 +47,7 @@ setSafeStatus() {
     safeStatus -= passedTime*4
   }
 
-  console.log("passing of time", passedTime)
+  // console.log("passing of time", passedTime)
 
   this.setState({
     safeStatus: Math.floor(safeStatus)
