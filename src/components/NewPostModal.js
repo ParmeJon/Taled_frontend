@@ -18,6 +18,7 @@ class NewPostModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+
     if (this.state.trip_id !== this.props.selected_trip.id) {
       this.setState({
         trip_id: this.props.selected_trip.id

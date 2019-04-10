@@ -12,9 +12,11 @@ class ConcernMeter extends React.Component {
 
 componentDidMount() {
     console.log(this.props)
+    if (!this.props.selected_trip.completed) {
     this.myInterval = setInterval( () => {
     this.setSafeStatus()
-  }, 2000);
+  }, 2000)
+}
 }
 
 componentWillUnmount() {
@@ -25,7 +27,14 @@ setSafeStatus() {
   // if (this.props && this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
   console.log("starting setsafestatus", this.state.safeStatus)
   let timeNow = Date.now()
-  let latestUpdate = this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1].updated_at
+  let latestUpdate
+
+  if (this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
+  latestUpdate = this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1].updated_at
+  } else {
+    latestUpdate = this.props.selected_trip.updated_at
+  }
+
   let latestUpdateDate = new Date(`${latestUpdate}`)
   let latestUpdateTimeMs = latestUpdateDate.getTime()
   // get the time passed in hours

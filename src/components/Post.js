@@ -9,7 +9,7 @@ class Post extends React.Component {
 
   render() {
     let date = new Date(`${this.props.info.updated_at}`)
-    let imgLink = this.props.info.post_image ? this.props.info.post_image.image_url : 'https://images.unsplash.com/photo-1534685785745-60a2cea0ec34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2725&q=80'
+    let imgLink = this.props.info.post_image && this.props.info.post_image.image_url? this.props.info.post_image.image_url : 'https://images.unsplash.com/photo-1534685785745-60a2cea0ec34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2725&q=80'
       let style = {
         backgroundImage: `url( ${imgLink} )`
       }

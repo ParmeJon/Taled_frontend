@@ -88,7 +88,7 @@
 }
 
 .busy-mark {
-  margin-top: -4%;
+  margin-top: -2%;
   color: red;
 }
 
@@ -440,10 +440,6 @@ body {
   margin: auto;
 }
 
-.concern-meter {
-  padding-top: 7%;
-  text-align: center;
-}
 
 .trip-info {
   padding-top: 25px;
@@ -481,6 +477,7 @@ body {
 .concern-meter {
   width: 800px;
   margin: auto;
+  text-align: center;
 }
 
 .trip-post-index {
@@ -526,6 +523,7 @@ body {
   font-family: sans-serif;
   border-radius: 5px;
   overflow: hidden;
+  height: 300px;
   z-index: 0;
 }
 .blog-card a {
@@ -571,9 +569,9 @@ body {
   transition: left .2s;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
-  padding: 10px;
+  padding: 20px;
   width: 100%;
-  font-size: .9rem;
+  font-size: 1.5rem;
 }
 .blog-card .details a {
   -webkit-text-decoration: dotted underline;
@@ -617,7 +615,7 @@ body {
 .blog-card .description h1 {
   line-height: 1;
   margin: 0;
-  font-size: 1.7rem;
+  font-size: 2rem;
 }
 .blog-card .description h2 {
   font-size: 1rem;
@@ -627,7 +625,9 @@ body {
   margin-top: 5px;
 }
 .blog-card .description .read-more {
+  font-size: 1.5rem;
   text-align: right;
+  margin-bottom: auto;
 }
 .blog-card .description .read-more a {
   color: #5ad67d;
@@ -649,6 +649,7 @@ body {
 .blog-card p {
   position: relative;
   margin: 1rem 0 0;
+  font-size: 1.5rem;
 }
 .blog-card p:first-of-type {
   margin-top: 1.25rem;
@@ -668,7 +669,8 @@ body {
 @media (min-width: 640px) {
   .blog-card {
     flex-direction: row;
-    max-width: 700px;
+    max-width: 900px;
+    /* max-height: 400px; */
   }
   .blog-card .meta {
     flex-basis: 40%;

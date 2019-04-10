@@ -20,9 +20,9 @@ handleFinish = () => {
 render() {
   return (
     <div className="trip-header">
-      <div className="trip-title">
+      <h1 className="trip-title">
       {this.props.selected_trip.title}
-      </div>
+      </h1>
 
       <ConcernMeter />
 
