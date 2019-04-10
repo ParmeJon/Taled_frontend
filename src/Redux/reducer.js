@@ -1,6 +1,7 @@
 const initialState = {
   current_user: {},
-  current_trip: {},
+  selected_trip: {},
+  selected_trip_posts: [],
   all_trips: []
 }
 
@@ -32,7 +33,27 @@ const reducer = (state = initialState, action) => {
     }
 
     case ('CREATE_TRIP'): {
-      return {...state, current_trip: action.payload.trip, current_user: action.payload.user}
+      return {...state, selected_trip: action.payload.trip, current_user: action.payload.user}
+    }
+
+    case ('SELECT_TRIP'): {
+      let posts = state.current_user.posts.filter(post => post.trip_id === action.payload.id)
+      console.log("selecting trip", posts)
+      return {...state, selected_trip: action.payload, selected_trip_posts: posts}
+    }
+
+    case ('DELETE_TRIP'): {
+      // let newTrips = [...state.all_trips].filter(trip => trip.id !== action.payload.id)
+      return {...state, current_user: action.payload.user}
+    }
+
+    case ('CREATE_POST'): {
+      let posts = action.payload.user.posts.filter(post => post.trip_id === action.payload.trip.id)
+      return {...state, current_user: action.payload.user, selected_trip: action.payload.trip, selected_trip_posts: posts}
+    }
+
+    case ('FINISH_TRIP'): {
+      return {...state, current_user: action.payload.user}
     }
 
     default:

@@ -1,6 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import {selectTrip, deleteTrip} from '../actions/action'
+import { withRouter } from "react-router-dom";
+
 
 class Trip extends React.Component {
+
+  handleSelect = () => {
+    console.log('working?')
+    this.props.selectTrip(this.props.info)
+    this.props.history.push(`/selected_trip`)
+  }
+
+  handleDelete = () => {
+    this.props.deleteTrip(this.props.info)
+  }
 
   render() {
     return(
@@ -60,9 +74,9 @@ class Trip extends React.Component {
             <i className="fab fa-facebook-f"></i>
             <i className="fab fa-twitter"></i>
             <i className="fab fa-instagram"></i>
-            <i className="fab fa-yelp"></i>
+            <i className="fas fa-trash" onClick={this.handleDelete}></i>
           </div>
-          <button>
+          <button onClick={this.handleSelect}>
           </button>
         </div>
         </div>
@@ -72,4 +86,10 @@ class Trip extends React.Component {
   }
 }
 
-export default Trip
+
+const mapDispatchToProps = (dispatch) => ({
+  selectTrip: (tripInfo) => dispatch(selectTrip(tripInfo)),
+  deleteTrip: (tripInfo) => dispatch(deleteTrip(tripInfo))
+})
+
+export default connect(null, mapDispatchToProps)(withRouter(Trip));

@@ -39,6 +39,7 @@ class Menu extends React.Component {
             {localStorage.token && this.props.current_user.first_name ?
               <NavDropdown alignRight className="mr-auto" title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item onClick={()=>this.props.history.push('/profile')}>{`${this.props.current_user.first_name}'s' page`}</NavDropdown.Item>
+              <NavDropdown.Item >Current Trip</NavDropdown.Item>
               <NavDropdown.Item >New Post</NavDropdown.Item>
               <NavDropdown.Item >New Trip</NavDropdown.Item>
               <NavDropdown.Divider />

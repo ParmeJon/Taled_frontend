@@ -40,7 +40,7 @@ render() {
       onHide={newTripModalClose}
       />
 
-      <div className="align-trip-index">
+      <div className="align-index">
         <ProfileTripIndex />
       </div>
     </div>
@@ -48,7 +48,7 @@ render() {
 }
 }
 
-const mapStateToProps = (state) => {return { current_user: state.current_user, current_trip: state.current_trip, all_trips: state.all_trips}}
+const mapStateToProps = (state) => {return { current_user: state.current_user, selected_trip: state.selected_trip, all_trips: state.all_trips}}
 
 // const mapDispatchToProps = dispatch => ({
 //   editProfile: (userInfo) => dispatch(createUser(userInfo)),

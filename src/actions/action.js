@@ -5,7 +5,66 @@ export const signUp = (signUpInfo) => ({type: "SIGN_UP", payload: signUpInfo})
 export const currentUser = (currentUserInfo) => ({type: "LOAD_CURRENT_USER", payload: currentUserInfo})
 export const updateUser = (userInfo) => ({type: "UPDATE_USER", payload: userInfo})
 export const createTrip = (tripInfo) => ({type: "CREATE_TRIP", payload: tripInfo})
+export const selectTrip = (tripInfo) => ({type: "SELECT_TRIP", payload: tripInfo})
+export const deleteStateTrip = (tripInfo) => ({type: "DELETE_TRIP", payload: tripInfo})
+export const createPost = (postInfo) => ({type: "CREATE_POST", payload: postInfo})
+export const finishTrip = (returnInfo) => ({type: "FINISH_TRIP", payload: returnInfo})
 
+export const updateFinishTrip = (id, completed) => (dispatch) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/trips/${id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      completed: !completed
+    })
+  })
+  .then(r => r.json())
+  .then(res => dispatch(finishTrip(res)) )
+}
+
+export const postCreatePost = (postInfo) => (dispatch) => {
+  let token = localStorage.token
+  let formData = new FormData()
+  if (postInfo.post_image) {
+    formData.append("post_image", postInfo.post_image)
+  }
+  formData.append("title", postInfo.title)
+  formData.append("content", postInfo.content)
+  formData.append("geolocation", postInfo.geolocation)
+  formData.append("trip_id", postInfo.trip_id)
+
+  return fetch(`http://localhost:3000/api/v1/posts`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: formData
+  })
+  .then(r => r.json())
+  .then(res => {
+    console.log(res)
+    dispatch(createPost(res))} )
+}
+
+export const deleteTrip = (tripInfo) => (dispatch) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/trips/${tripInfo.id}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(r=>r.json())
+  .then(res => dispatch(deleteStateTrip(res)))
+  .catch(console.error)
+}
 
 export const postCreateTrip = (tripInfo) => (dispatch) => {
   let token = localStorage.token
