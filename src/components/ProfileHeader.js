@@ -14,7 +14,7 @@ render() {
   return (
     <div id="profile-header">
       <div className="profile-pic">
-      <Image alt="profile image" src={this.props.current_user.profile_image ? `${this.props.current_user.profile_image.image_url}` : "https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"} thumbnail />
+      <Image alt="profile image" src={this.props.current_user && this.props.current_user.profile_image ? `${this.props.current_user.profile_image.image_url}` : "https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"} thumbnail />
       </div>
 
       <div className="profile-info">

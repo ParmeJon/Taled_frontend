@@ -13,6 +13,7 @@ class Menu extends React.Component {
 
   handleLogout = () => {
     localStorage.removeItem("token")
+    this.props.logoutUser()
     this.props.history.push('/signup')
   }
 
@@ -34,7 +35,11 @@ class Menu extends React.Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link onClick={()=>this.props.history.push('/signup')}>Signup</Nav.Link>
+          <Form inline>
+            <FormControl type="text" placeholder="Search Users" className="mr-sm-2" />
+            <Button variant="outline-info" className="fas fa-search" ></Button>
+          </Form>
+            {this.props.current_user && this.props.current_user.first_name ? null : <Nav.Link onClick={()=>this.props.history.push('/signup')}>Signup</Nav.Link>}
             {localStorage.token ? <Nav.Link onClick={this.handleLogout}>Logout</Nav.Link> : <Nav.Link onClick={()=>this.props.history.push('/login')}>Login</Nav.Link>}
             {localStorage.token && this.props.current_user.first_name ?
               <NavDropdown alignRight className="mr-auto" title="Profile" id="basic-nav-dropdown">
@@ -54,7 +59,8 @@ class Menu extends React.Component {
 
 const mapStateToProps = (state) => ({ current_user: state.current_user})
 const mapDispatchToProps = (dispatch) => ({
-  getCurrentUser: (token) => dispatch(getCurrentUser(token))
+  getCurrentUser: (token) => dispatch(getCurrentUser(token)),
+  logoutUser: () => dispatch(({type: "LOG_OUT"}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

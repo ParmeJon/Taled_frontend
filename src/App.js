@@ -18,7 +18,7 @@ class App extends Component {
           <Route path="/signup" render={() => <Signup />}/>
           <Route path="/login" render={() => <Login />}/>
           <Route path="/profile" render={() => <Profile />}/>
-          <Route path="/selected_trip" render={() => <TripContainer />} />
+          <Route path="/selected_trip/:id" render={() => <TripContainer />} />
           <Route exact path="/" render={()=> <Home />}/>
         </Switch>
       </div>

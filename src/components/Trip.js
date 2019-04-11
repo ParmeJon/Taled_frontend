@@ -9,7 +9,7 @@ class Trip extends React.Component {
   handleSelect = () => {
     console.log('working?')
     this.props.selectTrip(this.props.info)
-    this.props.history.push(`/selected_trip`)
+    this.props.history.push(`/selected_trip/${this.props.info.id}`)
   }
 
   handleDelete = () => {

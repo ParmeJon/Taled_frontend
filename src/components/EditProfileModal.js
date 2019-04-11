@@ -53,7 +53,7 @@ class EditProfileModal extends React.Component {
   }
 
   render() {
-    console.log(this.props.current_user.email)
+    // console.log(this.props.current_user.email)
 
     let selected = (this.props.current_user.active) ? 'selected' : 'false';
 

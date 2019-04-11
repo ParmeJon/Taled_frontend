@@ -85,10 +85,13 @@ console.log(this.state)
         <Form.Row>
 
         <Form.Group as={Col} controlId="formGridLocation">
-        <Form.Label>Location</Form.Label>
-          <Form.Control name="geolocation" value={this.props.post_geolocation !== "" ? this.props.post_geolocation : "Loading"} onChange={this.onChangeHandler}>
+        { this.props.post_geolocation ? <Form.Label>Location</Form.Label> : null }
 
-          </Form.Control>
+        { this.props.post_geolocation ?
+      <Form.Control name="geolocation" value={this.props.post_geolocation !== "" ? this.props.post_geolocation : "Loading"} onChange={this.onChangeHandler}>
+          </Form.Control> : <div><div>Location</div><div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+        }
+
         </Form.Group>
 
           <Form.Group as={Col} controlId="formGridUpload">
