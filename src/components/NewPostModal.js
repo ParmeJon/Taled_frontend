@@ -23,11 +23,13 @@ class NewPostModal extends React.Component {
   componentDidUpdate(prevProps) {
 
     if (this.state.trip_id !== this.props.selected_trip.id) {
-      navigator.geolocation.getCurrentPosition((position)=> {
         this.setState({
-          trip_id: this.props.selected_trip.id,
-          geolocation: `${this.props.post_geolocation}`
+          trip_id: this.props.selected_trip.id
         })
+    } else if (this.state.geolocation !== this.props.post_geolocation) {
+      this.setState({
+        geolocation: `${this.props.post_geolocation}`
+
       })
     }
   }
@@ -82,9 +84,9 @@ console.log(this.state)
 
         <Form.Row>
 
-        <Form.Group as={Col} controlId="formGridState">
+        <Form.Group as={Col} controlId="formGridLocation">
         <Form.Label>Location</Form.Label>
-          <Form.Control name="geolocation" value={this.props.post_geolocation} onChange={this.onChangeHandler}>
+          <Form.Control name="geolocation" value={this.props.post_geolocation !== "" ? this.props.post_geolocation : "Loading"} onChange={this.onChangeHandler}>
 
           </Form.Control>
         </Form.Group>

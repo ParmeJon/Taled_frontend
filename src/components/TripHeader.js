@@ -58,7 +58,6 @@ const mapStateToProps = (state) => {return { current_user: state.current_user, s
 const mapDispatchToProps = (dispatch) => ({
   finishTrip: (id, completed) => dispatch(updateFinishTrip(id, completed)),
   fetchArea: (coordinates) => dispatch(getArea(coordinates))
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TripHeader));
