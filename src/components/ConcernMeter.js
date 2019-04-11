@@ -60,10 +60,10 @@ setSafeStatus() {
 render() {
   return (
     <div className="concern-meter">
-      <h5>Concern Meter</h5>
+      <h5>Safety Meter</h5>
       { this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>
-      : <ProgressBar animated variant={this.safeStatus < 25 ? "danger" : this.safeStatus < 65 ? "warning" : "success"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
+      : <ProgressBar animated variant={this.safeStatus < 25 ? "danger" : "success"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
     }
     </div>
   )

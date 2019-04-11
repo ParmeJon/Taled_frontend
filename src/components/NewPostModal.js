@@ -19,14 +19,6 @@ class NewPostModal extends React.Component {
   }
 
 
-componentDidMount() {
-  console.log("about to fetcharea")
-  navigator.geolocation.getCurrentPosition((position)=> {
-    let coordinates = `${position.coords.latitude},${position.coords.longitude}`
-    this.props.fetchArea(coordinates)
-    console.log("mounting coordinates", coordinates)
-  })
-}
 
   componentDidUpdate(prevProps) {
 
@@ -92,9 +84,8 @@ console.log(this.state)
 
         <Form.Group as={Col} controlId="formGridState">
         <Form.Label>Location</Form.Label>
-          <Form.Control name="geolocation" onChange={this.onChangeHandler} as="select">
-          <option></option>
-          <option></option>
+          <Form.Control name="geolocation" value={this.props.post_geolocation} onChange={this.onChangeHandler}>
+
           </Form.Control>
         </Form.Group>
 
@@ -131,8 +122,7 @@ console.log(this.state)
 const mapStateToProps = (state) => ({ selected_trip: state.selected_trip, post_geolocation: state.post_geolocation})
 
 const mapDispatchToProps = (dispatch) => ({
-  createPost: (postInfo) => dispatch(postCreatePost(postInfo)),
-  fetchArea: (coordinates) => dispatch(getArea(coordinates))
+  createPost: (postInfo) => dispatch(postCreatePost(postInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostModal);
