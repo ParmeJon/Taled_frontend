@@ -6,10 +6,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
+
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../actions/action'
 
+
+
 class Menu extends React.Component {
+
+  state = {
+    query: ''
+  }
+
+  handleInputChange = (e) => {
+    this.setState({
+      query: e.target.value
+    })
+  }
 
   handleLogout = () => {
     localStorage.removeItem("token")
@@ -26,19 +39,24 @@ class Menu extends React.Component {
      }
   }
 
+  handleSearch = (e) => {
+    e.preventDefault()
+    this.props.setSearchTerm(this.state.query)
+    this.props.history.push(`/search/${this.state.query}`)
+  }
 
   render() {
-    console.log(this.props.current_user)
     return (
       <Navbar fixed="top" bg="transparent" expand="lg">
         <Navbar.Brand onClick={()=>this.props.history.push('/')}>TD</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-          <Form inline>
-            <FormControl type="text" placeholder="Search Users" className="mr-sm-2" />
-            <Button variant="outline-info" className="fas fa-search" ></Button>
+          <Form inline onSubmit={this.handleSearch}>
+            <FormControl type="text" placeholder="Search Users" className="mr-sm-2" onChange={this.handleInputChange}/>
+            <Button type="submit" variant="outline-info" className="fas fa-search"></Button>
           </Form>
+
             {this.props.current_user && this.props.current_user.first_name ? null : <Nav.Link onClick={()=>this.props.history.push('/signup')}>Signup</Nav.Link>}
             {localStorage.token ? <Nav.Link onClick={this.handleLogout}>Logout</Nav.Link> : <Nav.Link onClick={()=>this.props.history.push('/login')}>Login</Nav.Link>}
             {localStorage.token && this.props.current_user.first_name ?
@@ -60,7 +78,8 @@ class Menu extends React.Component {
 const mapStateToProps = (state) => ({ current_user: state.current_user})
 const mapDispatchToProps = (dispatch) => ({
   getCurrentUser: (token) => dispatch(getCurrentUser(token)),
-  logoutUser: () => dispatch(({type: "LOG_OUT"}))
+  logoutUser: () => dispatch(({type: "LOG_OUT"})),
+  setSearchTerm: (term) => dispatch(({type: "SET_TERM", payload: term}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));

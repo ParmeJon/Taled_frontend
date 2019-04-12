@@ -10,6 +10,23 @@ export const deleteStateTrip = (tripInfo) => ({type: "DELETE_TRIP", payload: tri
 export const createPost = (postInfo) => ({type: "CREATE_POST", payload: postInfo})
 export const finishTrip = (returnInfo) => ({type: "FINISH_TRIP", payload: returnInfo})
 export const areaResponse = (res) => ({type: "GET_AREA", payload: res})
+export const loadedUsers = (res) => ({type: "LOAD_USERS", payload: res})
+
+
+export const loadUsers = () => (dispatch) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/other_users`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(r => r.json())
+  .then(res => dispatch(loadedUsers(res)))
+  .catch(console.error)
+}
 
 export const getArea = (coordinates) => (dispatch) => {
   return fetch(`https://reverse.geocoder.api.here.com/6.2/reversegeocode.json?app_id=${process.env.REACT_APP_GEOLOCATION_APP_ID}&app_code=${process.env.REACT_APP_GEOLOCATION_APP_CODE}&mode=retrieveAreas&prox=${coordinates}`)

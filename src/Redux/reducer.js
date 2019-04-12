@@ -2,13 +2,19 @@ const initialState = {
   current_user: {},
   selected_trip: {},
   selected_trip_posts: [],
-  post_geolocation: ''
+  post_geolocation: '',
+  set_term: '',
+  loaded_users: []
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ('LOAD_USERS'): {
-      return {...state, trips: action.payload}
+      return {...state, loaded_users: action.payload}
+    }
+
+    case ("SET_TERM"): {
+      return {...state, set_term: action.payload}
     }
 
     case ('SIGN_UP'): {

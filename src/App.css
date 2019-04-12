@@ -762,3 +762,10 @@ body {
     transform: translate(19px, 0);
   }
 }
+
+/* styling search page  */
+.search-page {
+  margin-top: 20%;
+  justify-content: center;
+  text-align: center;
+}
