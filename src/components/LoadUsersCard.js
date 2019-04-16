@@ -4,19 +4,31 @@ import { withRouter } from "react-router-dom";
 import { Card, Button } from 'react-bootstrap'
 import {sendFriendRequest} from '../actions/action'
 import { App } from 'react-actioncable-provider'
+import NewRequestfeedForm from './NewRequestfeedForm'
+
 
 
 
 class LoadUsersCard extends React.Component {
 
   state = {
-    body: ""
+    title: "sent Request"
   }
 
 
-  friendHandler() {
-    App.cable.subscriptions.subscriptions[0].speak({ request: this.state.body });
-    this.setState({ body: "" });
+  friendHandler = () => {
+    // this.props.sendFriendRequest(this.props.info.id)
+    let person = `${this.props.info.first_name} ${this.props.info.last_name}`
+    let token = localStorage.token
+    fetch(`http://localhost:3000/api/v1/requestfeeds`, {
+      method: 'POST',
+      headers:  {
+        "content-type": "application/json",
+            accepts: "application/json",
+            Authorization: `Bearer ${token}`
+          },
+      body: JSON.stringify({title: `${this.props.current_user.first_name} sent a friend request to ${person}`})
+      });
   }
 
   render() {
@@ -39,8 +51,12 @@ class LoadUsersCard extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  sendFriendRequest: (user_id, friend_id) => dispatch(sendFriendRequest(user_id, friend_id))
+const mapStateToProps = (state) => ({
+  current_user: state.current_user
 })
 
-export default connect(null, mapDispatchToProps)(withRouter(LoadUsersCard));
+const mapDispatchToProps = (dispatch) => ({
+  sendFriendRequest: (friend_id) => dispatch(sendFriendRequest(friend_id))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoadUsersCard));

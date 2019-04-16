@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
-class ConcernMeter extends React.Component {
+class LoadUserConcernMeter extends React.Component {
 
   state = {
     safeStatus: 100
@@ -75,11 +75,11 @@ render() {
   } else if (this.state.safeStatus < 25) {
     status = <h4 className="warning">Warning, please post again soon.</h4>
   }
-  console.log("SAFESTATUS", this.props.selected_trip)
+  console.log("SAFESTATUS", this.state.safeStatus)
   return (
-    <div className="concern-meter">
+    <div className="load-user-concern-meter">
       {status}
-      { this.props.selected_trip_posts ? <ProgressBar variant="success" now={100} label={'Create your first trip!'}/> : this.state.safeStatus === 100 ?
+      { this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>
       : <ProgressBar animated variant={this.state.safeStatus > 55 ? "success" : this.state.safeStatus > 25 ? "warning" : "danger"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
     }
@@ -94,4 +94,4 @@ const mapStateToProps = (state) => {return { current_user: state.current_user, s
 //   editProfile: ()
 // })
 
-export default connect(mapStateToProps)(withRouter(ConcernMeter));
+export default connect(mapStateToProps)(withRouter(LoadUserConcernMeter));

@@ -14,8 +14,19 @@ export const loadedUsers = (res) => ({type: "LOAD_USERS", payload: res})
 export const loadTrip = (res) => ({type: "LOAD_TRIP", payload: res})
 
 
-export const sendFriendRequest = (user_id, friend_id) => {
 
+export const sendFriendRequest = (friend_id) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/requestfeeds`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({friend_id: friend_id})
+  })
+    .then(r => r.json())
 }
 
 export const getRecentTrip = () => (dispatch) => {

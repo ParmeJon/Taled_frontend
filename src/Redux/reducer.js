@@ -34,7 +34,14 @@ const reducer = (state = initialState, action) => {
     }
 
     case ('LOG_OUT'): {
-      state = initialState
+      state = {
+        current_user: {},
+        selected_trip: {},
+        selected_trip_posts: [],
+        post_geolocation: '',
+        set_term: '',
+        loaded_users: []
+      }
       return state
     }
 

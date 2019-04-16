@@ -846,3 +846,7 @@ body {
 .warning {
   color: red;
 }
+
+.load-user-concern-meter {
+  width: 200px;
+}
