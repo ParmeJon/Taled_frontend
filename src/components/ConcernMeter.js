@@ -39,7 +39,7 @@ setSafeStatus() {
   // get the time passed in hours
   let passedTime = (((timeNow - latestUpdateTimeMs) / 1000) / 60) / 60
   let safeStatus = 100
-  if (passedTime < 1) {
+  if (passedTime < 1 ) {
     safeStatus = 100
   } else if (passedTime > 25){
     safeStatus = 0
@@ -47,23 +47,41 @@ setSafeStatus() {
     safeStatus -= passedTime*4
   }
 
+  // for concer meter instead of safety meter
+  // let safeStatus = 0
+  // if (passedTime > 25 ) {
+  //   safeStatus = 100
+  // } else if (passedTime < 1){
+  //   safeStatus = 0
+  // } else {
+  //   safeStatus += passedTime*4
+  // }
+
   // console.log("passing of time", passedTime)
 
   this.setState({
     safeStatus: Math.floor(safeStatus)
   })
-// }
 }
 
 
 
 render() {
+  let status
+  if (this.state.safeStatus > 55) {
+    status = <h4 className="safe">Safe, you have recently posted</h4>
+  } else if (this.state.safeStatus < 55 && this.state.safeStatus > 20 ) {
+    status = <h4 className="moderate">Moderate, you haven't posted in a while.</h4>
+  } else if (this.state.safeStatus < 25) {
+    status = <h4 className="warning">Warning, please post again soon.</h4>
+  }
+  console.log("SAFESTATUS", this.state.safeStatus)
   return (
     <div className="concern-meter">
-      <h5>Safety Meter</h5>
+      {status}
       { this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>
-      : <ProgressBar animated variant={this.safeStatus < 25 ? "danger" : "success"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
+      : <ProgressBar animated variant={this.state.safeStatus > 55 ? "success" : this.state.safeStatus > 25 ? "warning" : "danger"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
     }
     </div>
   )

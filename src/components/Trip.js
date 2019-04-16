@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {selectTrip, deleteTrip} from '../actions/action'
+import {selectTrip, deleteTrip, getSelectedTrip} from '../actions/action'
 import { withRouter } from "react-router-dom";
 
 
@@ -8,7 +8,9 @@ class Trip extends React.Component {
 
   handleSelect = () => {
     console.log('working?')
-    this.props.selectTrip(this.props.info)
+    // Making a dynamic route that fetches a specific trip. Thus commenting below code.
+    // this.props.selectTrip(this.props.info)
+    this.props.getSelectedTrip(this.props.info.id)
     this.props.history.push(`/selected_trip/${this.props.info.id}`)
   }
 
@@ -88,8 +90,9 @@ class Trip extends React.Component {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  selectTrip: (tripInfo) => dispatch(selectTrip(tripInfo)),
-  deleteTrip: (tripInfo) => dispatch(deleteTrip(tripInfo))
+  // selectTrip: (tripInfo) => dispatch(selectTrip(tripInfo)),
+  deleteTrip: (tripInfo) => dispatch(deleteTrip(tripInfo)),
+  getSelectedTrip: (id) => dispatch(getSelectedTrip(id))
 })
 
 export default connect(null, mapDispatchToProps)(withRouter(Trip));

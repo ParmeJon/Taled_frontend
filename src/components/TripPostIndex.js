@@ -9,6 +9,8 @@ import Post from './Post'
 
 class TripPostIndex extends React.Component {
 
+  
+
 render() {
   console.log("trips' posts", this.props.selected_trip_posts)
   console.log("current user", this.props.current_user)

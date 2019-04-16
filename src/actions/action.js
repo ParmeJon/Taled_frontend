@@ -11,6 +11,42 @@ export const createPost = (postInfo) => ({type: "CREATE_POST", payload: postInfo
 export const finishTrip = (returnInfo) => ({type: "FINISH_TRIP", payload: returnInfo})
 export const areaResponse = (res) => ({type: "GET_AREA", payload: res})
 export const loadedUsers = (res) => ({type: "LOAD_USERS", payload: res})
+export const loadTrip = (res) => ({type: "LOAD_TRIP", payload: res})
+
+
+export const sendFriendRequest = (user_id, friend_id) => {
+
+}
+
+export const getRecentTrip = () => (dispatch) => {
+  let token = localStorage.token
+  return fetch(`http://localhost:3000/api/v1/current_trip`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+    .then(r => r.json())
+    .then(res => dispatch(loadTrip(res)))
+    .catch(console.error)
+}
+
+export const getSelectedTrip = (id) => (dispatch) => {
+  let token = localStorage.token
+  return fetch (`http://localhost:3000/api/v1/trips/${id}`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      accepts: "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(r => r.json())
+  .then(res => dispatch(loadTrip(res)))
+  .catch(console.error)
+}
 
 
 export const loadUsers = () => (dispatch) => {

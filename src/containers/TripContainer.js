@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import TripHeader from "../components/TripHeader"
 import NewPostModal from '../components/NewPostModal'
 import TripPostIndex from '../components/TripPostIndex'
-// import { withRouter } from "react-router-dom";
+import {getSelectedTrip} from '../actions/action'
+import { withRouter } from "react-router-dom";
 
 
 class TripContainer extends React.Component {
@@ -14,7 +15,15 @@ class TripContainer extends React.Component {
 
   newPostModalShow = () => {this.setState({newPostModalShow: true})}
 
+componentDidMount() {
+  let id = this.props.history.location.pathname.split("/selected_trip/")[1]
+  this.props.getSelectedTrip(id)
+
+}
+
+
 render() {
+    console.log("BIGGEST TEST", this.props.selected_trip)
 
 let newPostModalClose = () => this.setState({newPostModalShow: false})
 
@@ -36,7 +45,13 @@ let newPostModalClose = () => this.setState({newPostModalShow: false})
 }
 
 const mapStateToProps = (state) => ({
-  selected_trip: state.selected_trip
+  selected_trip: state.selected_trip,
+
 })
 
-export default connect(mapStateToProps)(TripContainer);
+const mapDispatchToProps = (dispatch) => ({
+    getSelectedTrip: (id) => dispatch(getSelectedTrip(id))
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TripContainer));

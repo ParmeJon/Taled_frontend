@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from "react-redux"
 import {loadUsers} from "../actions/action"
 import LoadUsersCard from '../components/LoadUsersCard'
+
 // import { withRouter } from "react-router-dom";
 
 
@@ -21,8 +22,10 @@ render() {
   console.log(componentOfUsers)
   return (
     <div className="search-page">
-      <h1>Welcome to the Search Page</h1>
+      <h1>Search Results</h1>
+      <div className="search-cards">
         {componentOfUsers && componentOfUsers.length > 0 ? componentOfUsers : "No Users based on search term"}
+      </div>
     </div>
   )
 }

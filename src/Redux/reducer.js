@@ -13,6 +13,11 @@ const reducer = (state = initialState, action) => {
       return {...state, loaded_users: action.payload}
     }
 
+    case ('LOAD_TRIP'): {
+      let tripPosts = action.payload.trip.posts
+      return {...state, selected_trip: action.payload.trip, selected_trip_posts: tripPosts}
+    }
+
     case ("SET_TERM"): {
       return {...state, set_term: action.payload}
     }

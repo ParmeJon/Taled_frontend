@@ -22,7 +22,7 @@ class ProfileTripIndex extends React.Component {
 
 
 render() {
-  console.log(this.props.current_user.trips)
+  console.log("Profile Trip Index iterating",this.props.current_user)
   return (
     <div id="profile-trip-index">
     {!this.props.current_user.trips || this.props.current_user.trips < 1 ?

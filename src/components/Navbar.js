@@ -21,6 +21,11 @@ class Menu extends React.Component {
   handleInputChange = (e) => {
     this.setState({
       query: e.target.value
+    },()=>{
+      console.log(this.state)
+      this.props.setSearchTerm(this.state.query)
+      this.props.history.push(`/search/${this.state.query}`)
+
     })
   }
 
@@ -52,13 +57,11 @@ class Menu extends React.Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-          <Form inline onSubmit={this.handleSearch}>
-            <FormControl type="text" placeholder="Search Users" className="mr-sm-2" onChange={this.handleInputChange}/>
-            <Button type="submit" variant="outline-info" className="fas fa-search"></Button>
-          </Form>
 
+            {localStorage.token && this.props.current_user.first_name ? <Nav.Link onClick={()=>this.props.history.push('/friends')}>Friends</Nav.Link> : null }
             {this.props.current_user && this.props.current_user.first_name ? null : <Nav.Link onClick={()=>this.props.history.push('/signup')}>Signup</Nav.Link>}
             {localStorage.token ? <Nav.Link onClick={this.handleLogout}>Logout</Nav.Link> : <Nav.Link onClick={()=>this.props.history.push('/login')}>Login</Nav.Link>}
+
             {localStorage.token && this.props.current_user.first_name ?
               <NavDropdown alignRight className="mr-auto" title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item onClick={()=>this.props.history.push('/profile')}>{`${this.props.current_user.first_name}'s' page`}</NavDropdown.Item>
@@ -66,8 +69,12 @@ class Menu extends React.Component {
               <NavDropdown.Item >New Post</NavDropdown.Item>
               <NavDropdown.Item >New Trip</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Friends</NavDropdown.Item>
+              <NavDropdown.Item >Friends</NavDropdown.Item>
             </NavDropdown> : null }
+            <Form inline onSubmit={this.handleSearch}>
+              <FormControl type="text" placeholder="Search Users" className="mr-sm-2" onChange={this.handleInputChange}/>
+              <Button type="submit" variant="outline-info" className="fas fa-search"></Button>
+            </Form>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

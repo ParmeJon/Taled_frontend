@@ -27,6 +27,7 @@ handleNewPostModal = () => {
 
 
 render() {
+  console.log(this.props.selected_trip.title)
   return (
     <div className="trip-header">
       <h1 className="trip-title">

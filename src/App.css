@@ -146,6 +146,8 @@
   .title {
     font-family: 'Lobster', cursive;
     position: relative;
+    width: auto;
+    height: auto;
     font-size: 20rem;
     text-align: center;
     padding-top: 10%;
@@ -765,7 +767,82 @@ body {
 
 /* styling search page  */
 .search-page {
-  margin-top: 20%;
+  margin-top: 10%;
   justify-content: center;
   text-align: center;
+}
+
+.search-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-cards {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.user-image-div {
+  display: inline;
+  width: 20rem;
+  height: 20rem;
+  overflow: auto;
+}
+
+.requestfeedsList {
+  margin-top: 20%;
+}
+
+.statistics {
+  height: auto;
+  width: auto;
+  margin: auto;
+  margin-top: 20%;
+  display: flex;
+
+}
+
+.baloons {
+  margin-top: -19%;
+  /* background-size: cover; */
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  filter: brightness(90%);
+}
+
+.statistics-title {
+  text-align: center;
+  padding-top: -100px;
+  font-size: 4rem;
+  color: white;
+}
+
+.update-title {
+  margin-top: 12%;
+  /* margin-left: 10%; */
+}
+
+.update-current-trip {
+  font-family: 'Lobster', cursive;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: -2px;
+  color:white;
+}
+
+.safe {
+  color: green;
+}
+
+.moderate {
+  color: yellow;
+}
+
+.warning {
+  color: red;
 }
