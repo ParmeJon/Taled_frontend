@@ -11,7 +11,8 @@ class ConcernMeter extends React.Component {
   }
 
 componentDidMount() {
-    console.log(this.props)
+  console.log("CHOSEN TRIP", this.props.selected_trip)
+    console.log(`${this.props.selected_trip.completed}`)
     if (!this.props.selected_trip.completed) {
     this.myInterval = setInterval( () => {
     this.setSafeStatus()
@@ -24,12 +25,18 @@ componentWillUnmount() {
 }
 
 setSafeStatus() {
-  // if (this.props && this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
-  let timeNow = Date.now()
+  // if (this.props && this.props.selected_trip_posts[1]) {
+  const timeNow = Date.now()
   let latestUpdate
+  let latestPost
 
-  if (this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
-  latestUpdate = this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1].updated_at
+  if (this.props.selected_trip_posts[0]) {
+  // latestUpdate = this.props.selected_trip_posts[0].updated_at
+    latestPost = this.props.selected_trip_posts.reduce(function(prev, curr) {
+      return prev.id > curr.id ? prev : curr;
+    });
+    latestUpdate = latestPost.updated_at
+
   } else {
     latestUpdate = this.props.selected_trip.updated_at
   }
@@ -79,7 +86,7 @@ render() {
   return (
     <div className="concern-meter">
       {status}
-      { this.props.selected_trip_posts ? <ProgressBar variant="success" now={100} label={'Create your first trip!'}/> : this.state.safeStatus === 100 ?
+      { !this.props.current_user.first_name ? <ProgressBar variant="success" now={100} label={'Create your first trip!'}/> : this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>
       : <ProgressBar animated variant={this.state.safeStatus > 55 ? "success" : this.state.safeStatus > 25 ? "warning" : "danger"}  now={this.state.safeStatus} label={`${this.state.safeStatus}%`}/>
     }

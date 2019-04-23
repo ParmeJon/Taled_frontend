@@ -5,34 +5,19 @@ import { Card, Button } from 'react-bootstrap'
 import {sendFriendRequest} from '../actions/action'
 import { App } from 'react-actioncable-provider'
 import NewRequestfeedForm from './NewRequestfeedForm'
+import LoadUserConcernMeter from './LoadUserConcernMeter'
 
 
 
 
-class LoadUsersCard extends React.Component {
+class LoadFriendsCard extends React.Component {
 
   state = {
     title: "sent Request"
   }
 
-
-  friendHandler = () => {
-    // this.props.sendFriendRequest(this.props.info.id)
-
-    let person = `${this.props.info.first_name} ${this.props.info.last_name}`
-    let token = localStorage.token
-    fetch(`http://localhost:3000/api/v1/friendships`, {
-      method: 'POST',
-      headers:  {
-        "content-type": "application/json",
-            accepts: "application/json",
-            Authorization: `Bearer ${token}`
-          },
-      body: JSON.stringify({user_id: this.props.current_user.id, friend_id: this.props.info.id, message: `${this.props.current_user.first_name} sent a friend request to ${person}`})
-      });
-  }
-
   render() {
+    console.log(this.props)
     return(
       <div className="user-cards">
       <Card style={{ width: '20rem', height: '30rem'}}>
@@ -44,7 +29,7 @@ class LoadUsersCard extends React.Component {
           <Card.Text>
             {this.props.info.email}
           </Card.Text>
-          <Button variant="info" onClick={this.friendHandler}>{"Send Friend Request"}</Button>
+          {this.props.info.trips[this.props.info.trips.length - 1] ? <LoadUserConcernMeter info={this.props.info}/> : null}
         </Card.Body>
       </Card>
       </div>
@@ -60,4 +45,4 @@ const mapDispatchToProps = (dispatch) => ({
   sendFriendRequest: (friend_id) => dispatch(sendFriendRequest(friend_id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoadUsersCard));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoadFriendsCard));

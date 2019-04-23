@@ -1,20 +1,24 @@
 import React from 'react';
-import { ActionCable } from 'react-actioncable-provider';
+import { ActionCableConsumer } from 'react-actioncable-provider';
 import { API_ROOT } from '../index';
 import NewRequestfeedForm from './NewRequestfeedForm';
 import FriendshipsArea from './FriendshipsArea';
-import Cable from './Cable';
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+// import Cable from './Cable';
+import {getCurrentUser} from '../actions/action'
 import {connect} from 'react-redux'
 
 class RequestfeedList extends React.Component {
   state = {
     requestfeeds: [],
-    activeRequestfeed: null
+    connected: false
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
+    console.log("MOUNTING")
     let token = localStorage.token
-    return fetch (`${API_ROOT}/requestfeeds`, {
+    fetch (`${API_ROOT}/friendships`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -23,76 +27,118 @@ class RequestfeedList extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(requestfeeds => this.setState({ requestfeeds }));
+      .then(res => this.setState({ requestfeeds: res}))//, () => this.setState({test: "test"})))
   };
 
-  handleClick = id => {
-    this.setState({ activeRequestfeed: id });
-  };
+//   componentDidUpdate = (prevProps, prevState) => {
+//   if (this.state.requestfeeds !== prevState.requestfeeds) {
+//     let token = localStorage.token
+//     fetch(`${API_ROOT}/friendships`, {
+//       method: 'GET',
+//       headers: {
+//         "Content-Type": "application/json",
+//         Accept: "application/json",
+//         Authorization: `Bearer ${token}`
+//       },
+//     })
+//     .then(resp => resp.json())
+//     .then( requestfeeds => this.setState({ requestfeeds: requestfeeds }));
+//   }
+// }
 
-  handleReceivedRequestfeed = response => {
-    const { requestfeed } = response;
+  // handleClick = id => {
+  //   this.setState({ activeRequestfeed: id }, () => console.log(this.state));
+  // };
+  handleConnected = () => {
     this.setState({
-      requestfeeds: [...this.state.requestfeeds, requestfeed]
-    });
+      connected: true
+    })
+  }
+
+  handleReceivedRequestfeed = (response) => {
+    console.log(response)
+    this.setState({
+      requestfeeds: [...this.state.requestfeeds, response.friendship]
+    }, () => console.log(this.state));
   };
 
-  handleReceivedFriendship = response => {
-    const { friendship } = response;
-    const requestfeeds = [...this.state.requestfeeds];
-    const requestfeed = requestfeeds.find(
-      requestfeed => requestfeed.id === friendship.requestfeed_id
-    );
-    requestfeed.friendships = [...requestfeed.friendships, friendship];
-    this.setState({ requestfeeds });
-  };
+  handleAcceptRequest = (e) => {
+    let token = localStorage.token
+    let id = e.target.parentElement.className
+    fetch (`${API_ROOT}/friendships/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        accepts: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ requestfeeds: res.filteredFriendships, user: res})//, () => this.setState({test: "test"})))
+        this.props.updateUser(res)
+      })
+  }
+  // handleReceivedFriendship = response => {
+  //   const { friendship } = response;
+  //   console.log(response)
+  //   const requestfeeds = [...this.state.requestfeeds];
+  //   const requestfeed = requestfeeds.find(
+  //     requestfeed => requestfeed.id === friendship.requestfeed_id
+  //   );
+  //   requestfeed.friendships = [...requestfeed.friendships, friendship];
+  //   this.setState({ requestfeeds });
+  // };
 
-  render = () => {
-    const { requestfeeds, activeRequestfeed } = this.state;
+  render() {
+    console.log("RENDER STATE", this.state)
+    let connected
+    const { requestfeeds} = this.state;
     return (
       <div className="requestfeedsList">
-        <ActionCable
-          channel={{ channel: 'RequestfeedsChannel' }}
+
+        <ActionCableConsumer
+          onConnected={() => console.log("CONNECTED")}
+          onDisconnected={() =>console.log("DISCONNECTED")}
+          onInitialized={() =>console.log("INITIALIZED")}
+          onRejected={() => console.log("rejected")}
+          channel={{ channel: 'FriendshipsChannel' }}
           onReceived={this.handleReceivedRequestfeed}
         />
-        {this.state.requestfeeds.length ? (
-          <Cable
-            requestfeeds={requestfeeds}
-            handleReceivedFriendship={this.handleReceivedFriendship}
-          />
-        ) : null}
-        <h2>Requestfeeds</h2>
-        <ul>{mapRequestfeeds(requestfeeds, this.handleClick)}</ul>
-        <NewRequestfeedForm />
-        {activeRequestfeed ? (
-          <FriendshipsArea
-            requestfeed={findActiveRequestfeed(
-              requestfeeds,
-              activeRequestfeed
-            )}
-          />
-        ) : null}
+
+        <h2>Friend Requests {this.state.connected ? 'connected' : null}</h2>
+        <div className="friend-requests">{mapRequestfeeds(requestfeeds, this.handleAcceptRequest)}</div>
       </div>
     );
   };
 }
 
-export default connect()(RequestfeedList);
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (res) => dispatch(({type: 'UPDATE_USER', payload: res})),
+})
+
+export default connect(null, mapDispatchToProps)(RequestfeedList);
 
 // helpers
 
-const findActiveRequestfeed = (requestfeeds, activeRequestfeed) => {
-  return requestfeeds.find(
-    requestfeed => requestfeed.id === activeRequestfeed
-  );
-};
+const mapRequestfeeds = (requestfeeds, onclick) => {
 
-const mapRequestfeeds = (requestfeeds, handleClick) => {
+
+
   return requestfeeds.map(requestfeed => {
+    // console.log("FEED", requestfeed)
     return (
-      <li key={requestfeed.id} onClick={() => handleClick(requestfeed.id)}>
-        {requestfeed.title}
-      </li>
+      <Card>
+      <Card.Body>
+      <div key={requestfeed.id} className={requestfeed.id}>
+        <Card.Title>
+        <p>{requestfeed.message}</p>
+        </Card.Title>
+        <Button onClick={onclick}>Accept</Button>
+      </div>
+      </Card.Body>
+      </Card>
+
     );
   });
 };

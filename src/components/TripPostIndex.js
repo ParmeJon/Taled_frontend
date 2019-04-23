@@ -9,7 +9,7 @@ import Post from './Post'
 
 class TripPostIndex extends React.Component {
 
-  
+
 
 render() {
   console.log("trips' posts", this.props.selected_trip_posts)
@@ -17,7 +17,7 @@ render() {
   return (
     <div id="trip-post-index">
     {this.props.selected_trip_posts || this.props.selected_trip_posts.length > 0 ?
-      this.props.selected_trip_posts.map(post => <Post info={post} />).reverse()
+      this.props.selected_trip_posts.map(post => <Post info={post} />)
       : <div>
       <h2>You haven't made any posts for this trip yet </h2>
       <p> When you make a Post, it'll show up here</p>

@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
 
     case ('LOAD_TRIP'): {
       let tripPosts = action.payload.trip.posts
+      console.log("SELECTED TRIP", action.payload.trip)
       return {...state, selected_trip: action.payload.trip, selected_trip_posts: tripPosts}
     }
 
@@ -48,6 +49,7 @@ const reducer = (state = initialState, action) => {
     case('UPDATE_USER'): {
       // localStorage.removeItem("token")
       // localStorage.setItem("token", action.payload.jwt)
+      console.log(action.payload)
       return {...state, current_user: action.payload.user}
     }
 

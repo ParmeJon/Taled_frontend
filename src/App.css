@@ -849,4 +849,19 @@ body {
 
 .load-user-concern-meter {
   width: 200px;
+  margin: auto;
+  text-align: center;
+}
+
+.friends-page {
+  margin-top: 10%;
+  justify-content: center;
+  text-align: center;
+}
+
+.friend-requests {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

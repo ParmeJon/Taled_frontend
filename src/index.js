@@ -10,6 +10,8 @@ import {createStore, applyMiddleware} from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom";
 import thunk from 'redux-thunk'
+import ActionCable from 'actioncable';
+
 
 import { ActionCableProvider } from 'react-actioncable-provider';
 
@@ -20,11 +22,11 @@ export const HEADERS = {
   Accept: 'application/json',
 };
 
-
+const cable = ActionCable.createConsumer('ws://localhost:3000/api/v1/cable')
 const store = createStore(reducer, applyMiddleware(thunk))
 
 ReactDOM.render(
-  <ActionCableProvider url={API_WS_ROOT}>
+  <ActionCableProvider cable={cable}>
     <BrowserRouter>
       <Provider store={store}>
         <App />

@@ -45,7 +45,7 @@ let newPostModalClose = () => this.setState({newPostModalShow: false})
 }
 
 const mapStateToProps = (state) => ({
-  selected_trip: state.selected_trip,
+  selected_trip: state.selected_trip
 
 })
 

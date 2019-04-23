@@ -12,7 +12,7 @@ class LoadUserConcernMeter extends React.Component {
 
 componentDidMount() {
     console.log(this.props)
-    if (!this.props.selected_trip.completed) {
+    if (!this.props.info.trips[this.props.info.trips.length - 1].completed) {
     this.myInterval = setInterval( () => {
     this.setSafeStatus()
   }, 2000)
@@ -27,11 +27,15 @@ setSafeStatus() {
   // if (this.props && this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
   let timeNow = Date.now()
   let latestUpdate
+  let latestPost
 
-  if (this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1]) {
-  latestUpdate = this.props.selected_trip_posts[this.props.selected_trip_posts.length - 1].updated_at
+  if (this.props.info.posts[this.props.info.posts.length - 1]) {
+  latestPost = this.props.info.posts.reduce(function(prev, curr) {
+    return prev.id > curr.id ? prev : curr;
+  });
+  latestUpdate = latestPost.updated_at
   } else {
-    latestUpdate = this.props.selected_trip.updated_at
+    latestUpdate = this.props.info.trips[this.props.info.trips.length - 1].updated_at
   }
 
   let latestUpdateDate = new Date(`${latestUpdate}`)
@@ -69,15 +73,16 @@ setSafeStatus() {
 render() {
   let status
   if (this.state.safeStatus > 55) {
-    status = <h4 className="safe">Safe, you have recently posted</h4>
+    status = <p className="safe">Safe, {this.props.info.first_name} has recently posted</p>
   } else if (this.state.safeStatus < 55 && this.state.safeStatus > 20 ) {
-    status = <h4 className="moderate">Moderate, you haven't posted in a while.</h4>
+    status = <p className="moderate">Moderate, {this.props.info.first_name} has not posted in a while.</p>
   } else if (this.state.safeStatus < 25) {
-    status = <h4 className="warning">Warning, please post again soon.</h4>
+    status = <p className="warning">Warning, {this.props.info.first_name} needs to post again soon.</p>
   }
-  console.log("SAFESTATUS", this.state.safeStatus)
+  // console.log("SAFESTATUS", this.state.safeStatus)
   return (
     <div className="load-user-concern-meter">
+      <h3>Ongoing: {this.props.info.trips[this.props.info.trips.length - 1].title}</h3>
       {status}
       { this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>
@@ -88,10 +93,10 @@ render() {
 }
 }
 
-const mapStateToProps = (state) => {return { current_user: state.current_user, selected_trip: state.selected_trip, selected_trip_posts: state.selected_trip_posts}}
+// const mapStateToProps = (state) => {return { current_user: state.current_user, selected_trip: state.selected_trip, selected_trip_posts: state.selected_trip_posts}}
 
 // const mapDispatchToProps = (dispatch) => ({
 //   editProfile: ()
 // })
 
-export default connect(mapStateToProps)(withRouter(LoadUserConcernMeter));
+export default connect(null)(withRouter(LoadUserConcernMeter));
