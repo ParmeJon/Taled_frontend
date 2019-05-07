@@ -1,68 +1,65 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TaleD Backend
 
-## Available Scripts
+TaleD is a blog geared towards solo travelers. With the increase of solo travels over the years the dangers and worry for our friends have increased as well. TaleD services as both a way to keep your friends and family updated through a Concern Meter and a blog for your trip.
 
-In the project directory, you can run:
+## Frontend Link
 
-### `npm start`
+https://github.com/ParmeJon/Taled_frontend
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```
+bundle i
+rails db:create db:migrate
+```
+## Environment Variables
 
-### `npm test`
+Create a .env file containing the following:
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+export SECRET_TOKEN="YOUR SECRET FOR JWT"
+```
+Create an AWS account and S3 bucket.
+Optional - encrypt with Rails Credentials and Master Key.
+Set up amazon_dev in a config/locales/storage.yml file to manage file uploads:
 
-### `npm run build`
+```
+amazon_dev:
+  service: S3
+  access_key_id: YOUR KEY ID
+  secret_access_key: YOUR SECRET ACCESS KEY
+  region: YOUR REGION
+  bucket: YOUR BUCKET
+secret_key_base: YOUR AWS SECRET KEY BASE
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Run
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Start up backend server before front end.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+rails s
+```
 
-### `npm run eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### User Authentication
+- JWT token decrypted and encrypted with .env SECRET TOKEN
+- Password encryped with BCrypt gem.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Action Cable
+- Action Cable implemented to facilitate receiving a friend request without refresh upon friendship creation.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Serializers
+- Serializers implemented to optimize information transfer for a User, Trip, and Post Models.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Self Referential Table
+- Used to facilitate User having many other Users(Friends) through Friendships.
 
-## Learn More
+## Built With
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Ruby On Rails Backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Created By
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Jonathan Chan [Github](http://www.github.com/ParmeJon)
