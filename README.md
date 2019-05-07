@@ -1,64 +1,62 @@
-# TaleD Backend
+# TaleD Frontend
 
 TaleD is a blog geared towards solo travelers. With the increase of solo travels over the years the dangers and worry for our friends have increased as well. TaleD services as both a way to keep your friends and family updated through a Concern Meter and a blog for your trip.
 
-## Frontend Link
+## Backend Link
 
-https://github.com/ParmeJon/Taled_frontend
+https://github.com/ParmeJon/Taled_backend
 
 ## Installation
 
 ```
-bundle i
-rails db:create db:migrate
+npm i
 ```
 ## Environment Variables
 
+Create an account with [DeveloperHere](https://developer.here.com/) and request an API APP ID and APP CODE.
 Create a .env file containing the following:
 
-```
-export SECRET_TOKEN="YOUR SECRET FOR JWT"
-```
-Create an AWS account and S3 bucket.
-Optional - encrypt with Rails Credentials and Master Key.
-Set up amazon_dev in a config/locales/storage.yml file to manage file uploads:
 
 ```
-amazon_dev:
-  service: S3
-  access_key_id: YOUR KEY ID
-  secret_access_key: YOUR SECRET ACCESS KEY
-  region: YOUR REGION
-  bucket: YOUR BUCKET
-secret_key_base: YOUR AWS SECRET KEY BASE
+REACT_APP_GEOLOCATION_APP_ID=YOUR APP ID
+REACT_APP_GEOLOCATION_APP_CODE=YOUR APP CODE
 ```
 
 ## Run
 
-Start up backend server before front end.
+Start up frontend server after your backend server.
 
 ```
-rails s
+npm start
 ```
 
 ## Features
 
-### User Authentication
-- JWT token decrypted and encrypted with .env SECRET TOKEN
-- Password encryped with BCrypt gem.
+### Concern Meter
+- Goes down to 0% after 25 hours of not posting.
+- Updates to 100% based on the most recent post creation time compared to current time.
+- Visually indicates user when to upload again for friends and family to know you're safe.
 
-### Action Cable
-- Action Cable implemented to facilitate receiving a friend request without refresh upon friendship creation.
+### Geolocation
+- Developer Here API used for grabbing specific location name for your post based on coordinates.
 
-### Serializers
-- Serializers implemented to optimize information transfer for a User, Trip, and Post Models.
+### Friends
+- Search bar created to search for other users.
+- Friend request can be sent and accepted.
+- Friends Page displays all accepted friends and their concern meter bar.
 
-### Self Referential Table
-- Used to facilitate User having many other Users(Friends) through Friendships.
+### In Progress
+- Flushing out Action Cable to send over the "accept" Friendship action information without refresh to the requesting User.
+- Friends' show pages.
+- Dry out code.
+- Geolocation MAP visual.
 
 ## Built With
 
-- Ruby On Rails Backend
+- React - Javascript Library
+- Redux to manage states and actions
+- React Bootstrap for some CSS
+
 
 ## Created By
 
