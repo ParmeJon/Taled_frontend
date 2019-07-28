@@ -17,7 +17,6 @@ class LoadFriendsCard extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return(
       <div className="user-cards">
       <Card style={{ width: '20rem', height: '30rem'}}>

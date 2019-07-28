@@ -1,7 +1,7 @@
 import React from 'react'
 import img from '../images/Taled_cover.svg';
 import { connect } from 'react-redux';
-import {FormControl, FormGroup, ControlLabel, HelpBlock, Checkbox, Radio, Button, Card} from 'react-bootstrap';
+import {Button, Card} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import {loginUser} from '../actions/action';
 import { withRouter } from "react-router-dom";

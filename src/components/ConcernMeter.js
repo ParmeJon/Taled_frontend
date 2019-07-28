@@ -7,20 +7,37 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 class ConcernMeter extends React.Component {
 
   state = {
-    safeStatus: 100
+    safeStatus: 100,
+    completed: false
   }
 
 componentDidMount() {
-  console.log("CHOSEN TRIP", this.props.selected_trip)
-    console.log(`${this.props.selected_trip.completed}`)
-    if (!this.props.selected_trip.completed) {
+    if (this.props.selected_trip && !this.props.selected_trip.completed) {
+      console.log('setting interval')
     this.myInterval = setInterval( () => {
     this.setSafeStatus()
   }, 2000)
 }
 }
 
+// If Trip is finished will clear interval.
+componentDidUpdate(prevProps, prevState) {
+  if (this.props.selected_trip.completed) {
+          console.log("updating stop interval");
+      clearInterval(this.myInterval)
+  }
+  // This is only needed if you want to drop CM if recontinued
+  // if (!this.props.selected_trip.completed) {
+  //       this.myInterval = setInterval(() => {
+  //         this.setSafeStatus();
+  //       }, 2000);
+  // }
+}
+
+
+
 componentWillUnmount() {
+  console.log('unmounting and clearing interval')
   clearInterval(this.myInterval)
 }
 
@@ -54,7 +71,7 @@ setSafeStatus() {
     safeStatus -= passedTime*4
   }
 
-  // for concer meter instead of safety meter
+  // for concern meter instead of safety meter
   // let safeStatus = 0
   // if (passedTime > 25 ) {
   //   safeStatus = 100
@@ -63,8 +80,6 @@ setSafeStatus() {
   // } else {
   //   safeStatus += passedTime*4
   // }
-
-  // console.log("passing of time", passedTime)
 
   this.setState({
     safeStatus: Math.floor(safeStatus)
@@ -82,7 +97,6 @@ render() {
   } else if (this.state.safeStatus < 25) {
     status = <h4 className="warning">Warning, please post again soon.</h4>
   }
-  console.log("SAFESTATUS", this.props.selected_trip)
   return (
     <div className="concern-meter">
       {status}

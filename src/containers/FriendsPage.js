@@ -1,9 +1,8 @@
-import RequestfeedList from '../components/RequestfeedList'
+import RequestfeedList from '../components/RequestfeedList';
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import Button from 'react-bootstrap/Button'
-import { connect } from 'react-redux'
-import LoadFriendsCard from '../components/LoadFriendsCard'
+import { connect } from 'react-redux';
+import LoadFriendsCard from '../components/LoadFriendsCard';
 
 
 
@@ -25,7 +24,7 @@ render() {
     console.log("APPROVEDFRIENDSARR", approvedFriendsArr)
     idApprovedFriendsArr = approvedOnlyFriendsArr.map(friendship => friendship.friend_id)
     console.log("idAPPROVEDFRIENDS", idApprovedFriendsArr)
-  correctFriendsArr = this.props.current_user.friends.filter(friend => idApprovedFriendsArr.includes(friend.id))
+    correctFriendsArr = this.props.current_user.friends.filter(friend => idApprovedFriendsArr.includes(friend.id))
     // unique = correctFriendsArr.filter(friend => )
     console.log("CORRECTFRIENDSARR", correctFriendsArr)
     const visited = new Set()

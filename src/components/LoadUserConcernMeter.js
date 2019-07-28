@@ -11,7 +11,7 @@ class LoadUserConcernMeter extends React.Component {
   }
 
 componentDidMount() {
-    console.log(this.props)
+    // Checks if the most recent trip is completed. If so they are safe.
     if (!this.props.info.trips[this.props.info.trips.length - 1].completed) {
     this.myInterval = setInterval( () => {
     this.setSafeStatus()
@@ -37,11 +37,11 @@ setSafeStatus() {
   } else {
     latestUpdate = this.props.info.trips[this.props.info.trips.length - 1].updated_at
   }
-
   let latestUpdateDate = new Date(`${latestUpdate}`)
   let latestUpdateTimeMs = latestUpdateDate.getTime()
   // get the time passed in hours
   let passedTime = (((timeNow - latestUpdateTimeMs) / 1000) / 60) / 60
+  // console.log("PASSED TIME" + this.props.info.first_name, passedTime)
   let safeStatus = 100
   if (passedTime < 1 ) {
     safeStatus = 100
@@ -82,7 +82,8 @@ render() {
   // console.log("SAFESTATUS", this.state.safeStatus)
   return (
     <div className="load-user-concern-meter">
-      <h3>Ongoing: {this.props.info.trips[this.props.info.trips.length - 1].title}</h3>
+      {/* CURRENTLY NOT GRABBING THE MOST RECENT TRIP BUT LAST IN ARRAY - NEEDS FIXING */}
+      <h3>Latest: {this.props.info.trips[this.props.info.trips.length - 1].title}</h3>
       {status}
       { this.state.safeStatus === 100 ?
       <ProgressBar variant="success" now={this.state.safeStatus} label={`${Math.floor(this.state.safeStatus)}%`}/>

@@ -19,10 +19,7 @@ class ProfileTripIndex extends React.Component {
   // }
 
 
-
-
 render() {
-  console.log("Profile Trip Index iterating",this.props.current_user)
   return (
     <div id="profile-trip-index">
     {!this.props.current_user.trips || this.props.current_user.trips < 1 ?
@@ -30,7 +27,8 @@ render() {
       <h2>You haven't made any trips yet </h2>
       <p> When you post a Trip, it'll show up here</p>
       </div>
-      : this.props.current_user.trips.map(trip => <Trip info={trip} />) }
+      : this.props.current_user.trips.sort((a, b) => { return b.id - a.id})
+      .map(trip => <Trip info={trip} />) }
 
     </div>
   )
